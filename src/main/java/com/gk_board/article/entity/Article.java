@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
 import java.util.Map;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -20,14 +23,19 @@ public class Article extends AuditingFields {
     @Column(nullable = false, length = 10000)
     private String content;
 
-    @ElementCollection
-    private Map<Integer,Integer> refArticle;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mainArticle")
+    @Setter
+    private Article mainArticle;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "mainArticle")
+    @Setter
+    private List<Article> refArticle;
 
     public Article(String title, String content) {
         this.title = title;
         this.content = content;
     }
-
 
     public static Article of(String title, String content) {
         return new Article(title, content);
