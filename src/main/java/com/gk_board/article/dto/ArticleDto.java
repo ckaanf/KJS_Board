@@ -8,7 +8,7 @@ public record ArticleDto(
         Long id,
         String title,
         String content,
-        LocalDateTime createdAt,
+        LocalDateTime created_at,
         LocalDateTime modifiedAt
 
 ) {
@@ -25,6 +25,8 @@ public record ArticleDto(
                 entity.getModifiedAt()
         );
     }
+
+
 
     public Article toEntity(){
         return Article.of(
