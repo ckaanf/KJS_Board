@@ -30,7 +30,7 @@ public class ArticleController {
     //게시글 리스트
     @GetMapping
     public ResponseEntity readArticleList(
-            @PageableDefault(size = 10, sort = "created_at", direction = Sort.Direction.DESC) Pageable pageable
+            @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
     ) {
         Page<ArticleListResponse> articlePage = articleService.getArticlesList(pageable).map(ArticleListResponse::from);
         List<ArticleListResponse> articleList = articlePage.getContent();

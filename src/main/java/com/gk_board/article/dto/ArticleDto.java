@@ -8,7 +8,7 @@ public record ArticleDto(
         Long id,
         String title,
         String content,
-        LocalDateTime created_at,
+        LocalDateTime createdAt,
         LocalDateTime modifiedAt
 
 ) {

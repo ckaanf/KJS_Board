@@ -9,17 +9,17 @@ import java.util.Map;
 public record ArticleListResponse(
         Long articleId,
         String title,
-        LocalDateTime created_at
+        LocalDateTime createdAt
 ) {
-    public static ArticleListResponse of (Long articleId, String title, LocalDateTime created_at){
-        return new ArticleListResponse(articleId, title, created_at);
+    public static ArticleListResponse of (Long articleId, String title, LocalDateTime createdAt){
+        return new ArticleListResponse(articleId, title, createdAt);
     }
 
     public static ArticleListResponse from(ArticleDto dto){
         return new ArticleListResponse(
                 dto.id(),
                 dto.title(),
-                dto.created_at()
+                dto.createdAt()
         );
     }
     public static ArticleListResponse from(Article entity){
