@@ -37,33 +37,24 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public ArticleDto saveRefArticle(Long articleId, List<String> keywords){
         Article article = articleRepository.getReferenceById(articleId);
-        List<Keyword> articleList = keywordRepository.findByContentIn(keywords);
+        List<Long> articleList = keywordRepository.findByContentIn(keywords);
 
-        //키워드에서 중복을 제거하고 검색
-        Set<Long> refArticleId = new HashSet<>();
-        for(int i = 0; i<articleList.size(); i++) {
-            if(!articleId.equals(articleList.get(i).getArticleId()))
-            refArticleId.add(articleList.get(i).getArticleId());
-        }
+        log.info("리스트 확인 : {}", articleList);
 
         for(int i = 0; i<articleList.size(); i++){
-            if(!articleId.equals(articleList.get(i).getArticleId()))
-                article = articleRepository.getReferenceById(articleList.get(i).getArticleId());
-            article.setMainArticle(articleRepository.getReferenceById(articleId));
+            if(!Objects.equals(articleId, articleList.get(i))) {
+                article = articleRepository.getReferenceById(articleList.get(i));
+                article.setMainArticle(articleRepository.getReferenceById(articleId));
+            }
         }
 
 
-
-//        List<Article> articleDtoList = new ArrayList<>();
-//        for (Long aLong : refArticleId) {
-//            articleDtoList.add(articleRepository.getReferenceById(aLong));
-//        }
-//
 //        article.setRefArticle(articleDtoList);
         List<ArticleDto> checkArticle = articleRepository.findById(articleId).map(ArticleDto::from).stream().toList();
 
 
-        log.info("아티클 확인: {} , 아티클 리스트 확인 : {}, 연관 아티클 Id: {} , 연관 아티클 확인 : {}", article.getContent(),articleList,refArticleId, checkArticle );
+//        log.info("아티클 확인: {} , 아티클 리스트 확인 : {}, 연관 아티클 Id: {} , 연관 아티클 확인 : {}", article.getContent(),articleList,articleDtoList, checkArticle );
+        log.info("아티클 확인: {} , 아티클 리스트 확인 : {},  연관 아티클 확인 : {}", article.getContent(),articleList, checkArticle );
 
         return null;
     }

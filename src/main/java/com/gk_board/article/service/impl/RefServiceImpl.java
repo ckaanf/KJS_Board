@@ -44,14 +44,14 @@ public class RefServiceImpl {
 
         for (int i = 0; i < keywordList.size(); i++) {
             int cnt = 0;
-            float ratio = 0;
             long keywordRatio = articleRepository.countArticleByContentContaining(keywordList.get(i).getRefKeyword());
+            float ratio = (float) keywordRatio / allArticle;
 
-            if ((float) keywordRatio / allArticle < 0.4) {
+            if (ratio < 0.4) {
                 refKeyword.add(keywordList.get(i).getRefKeyword());
                 ratio = (float) keywordRatio / allArticle;
-
             }
+
             log.info(" 전체 게시글 : {}, 현재 키워드 {}, 키워드 비율 : {}", allArticle,keywordList.get(i).getRefKeyword(), ratio);
         }
         log.info("keyword 리스트 : {}", refKeyword);

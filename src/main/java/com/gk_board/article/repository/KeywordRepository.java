@@ -14,6 +14,6 @@ public interface KeywordRepository extends JpaRepository<Keyword, Long> {
 
     List<Keyword> getKeywordsByArticleId(Long articleId);
 
-    @Query("select k from Keyword as k where k.refKeyword in :keyword")
-    List<Keyword> findByContentIn(List<String> keyword);
+    @Query("select k.articleId, count(*) from Keyword as k where k.refKeyword in :keyword group by k.articleId having (count (*)>1) order by count(*) desc ")
+    List<Long> findByContentIn(List<String> keyword);
 }
