@@ -1,4 +1,4 @@
-package com.example.gk_board;
+package com.gk_board;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
